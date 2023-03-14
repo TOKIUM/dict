@@ -20,9 +20,15 @@ export class Check {
       return noDicts.map((n) => ({ filePath: text.filepath, targetType: n.targetType, targetName: n.targetName }));
     });
 
+    if (outputs.length === 0) {
+      console.log('All dictionaries found.');
+      exit(0);
+    }
+
     console.log('No dictionaries found:');
     outputs.forEach((output) => {
       console.log(`${output.filePath} [${output.targetType}] ${output.targetName}`);
     });
+    exit(1);
   }
 }
