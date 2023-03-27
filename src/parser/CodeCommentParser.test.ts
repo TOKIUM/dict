@@ -36,11 +36,11 @@ class C
 end
 `;
       const lines = text.split('\n').map(line => line.trim());
-      const comments = parser.parse(lines);
+      const comments = parser.parse('example.rb', lines);
       expect(comments).toEqual([
-        { targetType: 'class', targetName: 'AA', lines: ['class comment 1', 'class comment 2'] },
-        { targetType: 'class', targetName: 'B', lines: ['class comment 3'] },
-        { targetType: 'class', targetName: 'C', lines: [] },
+        { targetType: 'class', targetName: 'AA', lines: ['class comment 1', 'class comment 2'], targetFilePath: 'example.rb', targetLine: 8 },
+        { targetType: 'class', targetName: 'B', lines: ['class comment 3'], targetFilePath: 'example.rb', targetLine: 24 },
+        { targetType: 'class', targetName: 'C', lines: [], targetFilePath: 'example.rb', targetLine: 27 },
       ]);
     });
   });

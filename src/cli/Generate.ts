@@ -4,8 +4,10 @@ import { CodeLanguage } from '../parser/CodeLanguage';
 import { CodeText } from '../parser/CodeText';
 import { Dictionary } from '../dictionary/Dictionary';
 import { listFiles } from '../util/files';
+import { DictionaryFormatter } from '../formatter/DictionaryFormatter';
+import { Format } from '../formatter/Format';
 
-export class Check {
+export class Generate {
   static async execute(
     filePaths: string[],
   ): Promise<void> {
@@ -16,18 +18,20 @@ export class Check {
       const language = CodeLanguage.from(text.filepath);
       const parser = CodeCommentParser.from(language);
       const comments = parser.parse(text.filepath, text.lines);
-      return comments.filter(comment => !Dictionary.fromComment(comment));
+      const dicts = comments.map(comment => Dictionary.fromComment(comment)).filter((dict) => dict !== undefined)
+      return dicts;
     });
 
     if (outputs.length === 0) {
-      console.log('All dictionaries found.');
-      exit(0);
+      console.log('No dictionaries found.');
+      exit(1);
     }
 
-    console.log('No dictionaries found:');
-    outputs.forEach((output) => {
-      console.log(`${output.targetFilePath} [${output.targetType}] ${output.targetName}`);
-    });
-    exit(1);
+    const format = Format.from('md'); // 現状はmarkdownしかないので固定
+    const documentFormatter = DictionaryFormatter.from(format);
+    const formatted = documentFormatter.format(outputs);
+
+    console.log(formatted);
+    exit(0);
   }
 }

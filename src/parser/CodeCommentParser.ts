@@ -2,12 +2,12 @@ import { CodeLanguage } from './CodeLanguage';
 import { CodeComment } from './CodeComment';
 
 interface CodeCommentParser {
-  parse(lines: string[]): CodeComment[];
+  parse(filePath: string, lines: string[]): CodeComment[];
 }
 
 export class RubyCodeCommentParser implements CodeCommentParser {
-  parse(lines: string[]): CodeComment[] {
-    const result = lines.reduce((acc, line) => {
+  parse(filePath: string, lines: string[]): CodeComment[] {
+    const result = lines.reduce((acc, line, index) => {
       // ignore empty line
       if (line.length === 0) return acc;
       // ignore singleton class extension
@@ -16,9 +16,12 @@ export class RubyCodeCommentParser implements CodeCommentParser {
       // accumulate comments
       if (line.startsWith('#')) return { accComments: acc.accComments, accLines: [...acc.accLines, line.replace(/^#/, '').trim()] };
 
-      if (line.startsWith('class ')) return { accComments: [...acc.accComments, { targetType: 'class', targetName: line.split(' ')[1], lines: acc.accLines }], accLines: [] };
+      if (line.startsWith('class ')) {
+        const newComment: CodeComment = { targetType: 'class', targetName: line.split(' ')[1], lines: acc.accLines, targetLine: index, targetFilePath: filePath };
+        return { accComments: [...acc.accComments, newComment], accLines: [] };
+      }
       return { accComments: acc.accComments, accLines: [] };
-    }, { accComments: [], accLines: [] });
+    }, { accComments: [] as CodeComment[], accLines: [] as string[] });
 
     return result.accComments;
   }
