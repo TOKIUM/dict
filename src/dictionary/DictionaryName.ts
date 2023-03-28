@@ -13,4 +13,12 @@ export class DictionaryName {
     const normalized = found.replace(NAME_MARKER, '').split(',').map(name => name.trim());
     return new DictionaryName(normalized);
   }
+  
+  get mainName(): string {
+    return this.names[0];
+  }
+
+  get aliasNames(): string[] {
+    return this.names.slice(1);
+  }
 }

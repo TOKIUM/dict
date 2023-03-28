@@ -5,7 +5,7 @@ import { Generate } from './cli/Generate';
 
 interface CommandArguments {
   command: 'check' | 'generate'
-  filePaths: string[];
+  args: string[];
 }
 class InvalidArgumentsError extends Error {
   constructor(message: string) {
@@ -22,9 +22,9 @@ const CommandArguments = {
       return new InvalidArgumentsError('Invalid command. Use "check" or "generate".');
     }
 
-    const filePaths = argv.slice(1);
+    const args = argv.slice(1);
     
-    return { command, filePaths };
+    return { command, args };
   }
 };
 
@@ -38,8 +38,8 @@ const CommandArguments = {
   }
 
   try {
-    if (commandArgs.command === 'check') await Check.execute(commandArgs.filePaths);
-    if (commandArgs.command === 'generate') await Generate.execute(commandArgs.filePaths);
+    if (commandArgs.command === 'check') await Check.execute(commandArgs.args);
+    if (commandArgs.command === 'generate') await Generate.execute(commandArgs.args);
   } catch (err) {
     console.error(err);
     process.exit(1);

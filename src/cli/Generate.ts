@@ -4,14 +4,16 @@ import { CodeLanguage } from '../parser/CodeLanguage';
 import { CodeText } from '../parser/CodeText';
 import { Dictionary } from '../dictionary/Dictionary';
 import { listFiles } from '../util/files';
-import { DictionaryFormatter } from '../formatter/DictionaryFormatter';
-import { Format } from '../formatter/Format';
+import { DictionaryExporter } from '../exporter/DictionaryExporter';
+import { Format } from '../exporter/Format';
 
 export class Generate {
   static async execute(
-    filePaths: string[],
+    args: string[],
   ): Promise<void> {
-    const extractedPaths  = filePaths.flatMap(listFiles);
+    const format = Format.from(args[0]);
+    const filePaths = args.slice(1);
+    const extractedPaths = filePaths.flatMap(listFiles);
     const texts = await Promise.all(extractedPaths.map(filepath => CodeText.from(filepath)));
 
     const outputs = texts.flatMap((text) => {
@@ -27,11 +29,8 @@ export class Generate {
       exit(1);
     }
 
-    const format = Format.from('md'); // 現状はmarkdownしかないので固定
-    const documentFormatter = DictionaryFormatter.from(format);
-    const formatted = documentFormatter.format(outputs);
-
-    console.log(formatted);
+    const documentExporter = DictionaryExporter.from(format);
+    await documentExporter.export(outputs);
     exit(0);
   }
 }
