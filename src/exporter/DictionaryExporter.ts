@@ -2,7 +2,7 @@ import { Dictionary } from '../dictionary/Dictionary';
 import { Format } from './Format';
 import { Client } from '@notionhq/client';
 import { BlockObjectRequest, BlockObjectResponse, ParagraphBlockObjectResponse, PartialBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints';
-import { BlockGenerator } from './notion/ParagraphGenerator';
+import { ParagraphBlockGenerator } from './notion/ParagraphBlockGenerator';
 import { rateLimitedSequentially } from '../util/promises';
 import { LinkedDictionaryName } from './notion/LinkedDictionaryName';
 import { LinkedRichTextGenerator } from './notion/LinkedRichTextGenerator';
@@ -59,13 +59,13 @@ export class NotionDictionaryFormatter implements DictionaryExporter {
 
   async export(dictionaries: Dictionary[]): Promise<void> {
     // notionの更新API等はページまるごと更新するようなことができないので、いったんすべて消したうえで再度追加する
-    // 追加した後に各ブロック内の説明文に、用語ごとにリンクを貼って再度更新する
+    // 追加した後に各ブロック内の説明文に、用語ごとにリンクを貼って再度更新することで、はてなブログのように用語間の遷移をやりやすくする
     // 1. 既存ページ内のクリーンアップ
     const existingBlocks = await this.notion.blocks.children.list({ block_id: this.pageId });
     await rateLimitedSequentially(existingBlocks.results, 3, (block) => this.notion.blocks.delete({ block_id: block.id }))
 
     // 2. ページ内への辞書追加 これにより、ページ内の辞書のブロックへのリンクが生成可能になる
-    const paragraphs = dictionaries.map((dictionary) => BlockGenerator.fromDictionary(dictionary));
+    const paragraphs = dictionaries.map((dictionary) => ParagraphBlockGenerator.fromDictionary(dictionary));
     const firstResult = await this.notion.blocks.children.append({
       block_id: this.pageId,
       children: paragraphs,
