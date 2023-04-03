@@ -1,4 +1,4 @@
-name: Node.js Package
+name: Release 
 
 on:
   workflow_dispatch:
@@ -19,7 +19,7 @@ jobs:
       - run: npm ci
       - run: npm test
 
-  bump-gpr:
+  release-gpr:
     needs: test
     runs-on: ubuntu-latest
     permissions:
