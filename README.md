@@ -1,6 +1,4 @@
 # @tokium/dict
-[![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/TOKIUM/dict)
-
 ## 概要
 コード上のコメントから辞書を作成するツールです。現在Rubyのみ対応しています。
 ```ruby
@@ -39,7 +37,7 @@ $ dict check <path/to/dict/dir>
 
 ## 開発
 ### 環境構築
-devcontainerを用意しています。vscodeとdockerが導入されていれば、README内の[Open in Dev Containers]ボタンから開くことができます。
+devcontainerを用意しています。vscodeの`Remote-Containers`拡張をインストールして、`Remote-Containers: Reopen Folder in Container`を実行すると、開発環境が構築されます。
 
 ### テスト
 テストはjestで実行されます。下記のコマンドでテストを実行できます。
