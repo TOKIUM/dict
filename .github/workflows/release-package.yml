@@ -41,7 +41,6 @@ jobs:
           npm version ${{ github.event.inputs.version }}
           git push origin --tags
           git push origin HEAD:main 
-          echo "version=$(git describe --tags --abbrev=0)" >> "$GITHUB_ENV"
       - run: npm run build
       - run: npm publish
         env:
@@ -51,7 +50,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.version.outputs.version }}
-          release_name: Release ${{ steps.version.outputs.version }}
+          tag_name: ${{ env.version }}
+          release_name: Release ${{ env.version }}
           draft: false
           prerelease: false
