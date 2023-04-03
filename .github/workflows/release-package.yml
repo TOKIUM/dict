@@ -37,7 +37,7 @@ jobs:
           git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-          npm version ${{ github.event.inputs.version }}}} 
+          npm version ${{ github.event.inputs.version }}
           git push origin --tags
           git push origin HEAD:main
       - run: npm run build
