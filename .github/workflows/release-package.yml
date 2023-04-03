@@ -33,14 +33,25 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - run: npm ci
       - name: version push
+        id: version
         run: |
           git remote set-url origin https://github-actions:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           npm version ${{ github.event.inputs.version }}
           git push origin --tags
-          git push origin HEAD:main
+          git push origin HEAD:main 
+          echo "$(git describe --tags --abbrev=0)" > "$GITHUB_OUTPUT"
       - run: npm run build
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          relase_name: Release ${{ steps.version.outputs.version }}
+          draft: false
+          prerelease: false
