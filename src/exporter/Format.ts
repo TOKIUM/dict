@@ -1,4 +1,4 @@
-export type Format = 'Markdown' | 'Notion';
+export type Format = 'Markdown' | 'Notion' | 'Yaml';
 
 export const Format = {
 
@@ -8,6 +8,8 @@ export const Format = {
         return 'Markdown';
       case 'notion':
         return 'Notion';
+      case 'yaml':
+        return 'Yaml';
       default:
         throw new Error(`Unknown format: ${type}`);
     }

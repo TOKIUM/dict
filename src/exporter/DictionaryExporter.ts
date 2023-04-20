@@ -1,7 +1,7 @@
 import { Dictionary } from '../dictionary/Dictionary';
 import { Format } from './Format';
 import { Client } from '@notionhq/client';
-import { BlockObjectRequest, BlockObjectResponse, ParagraphBlockObjectResponse, PartialBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints';
+import { ParagraphBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { ParagraphBlockGenerator } from './notion/ParagraphBlockGenerator';
 import { rateLimitedSequentially } from '../util/promises';
 import { LinkedDictionaryName } from './notion/LinkedDictionaryName';
@@ -98,6 +98,28 @@ export class NotionDictionaryFormatter implements DictionaryExporter {
   }
 }
 
+export class YamlDictionaryFormatter implements DictionaryExporter {
+  async export(dictionaries: Dictionary[]): Promise<void> {
+    const entry = dictionaries.map((dictionary) => {
+      const mainNamePart = `- name: ${dictionary.name.names[0]}`;
+      const descriptionPart = `  description: ${dictionary.description.value}`;
+      const aliasesHeaderPart = dictionary.name.aliasNames.length > 0 ? ['  aliases:'] : []; 
+      const aliasesBodyPart = dictionary.name.aliasNames.map((aliasName) => `    - ${aliasName}`);
+
+      return [
+        mainNamePart,
+        descriptionPart,
+        ...aliasesHeaderPart,
+        ...aliasesBodyPart,
+      ].join('\n');
+    }).join('\n');
+
+    console.log(entry);
+
+    return Promise.resolve();
+  }
+}
+
 export const DictionaryExporter = {
   from(format: Format): DictionaryExporter {
     switch (format) {
@@ -105,6 +127,8 @@ export const DictionaryExporter = {
         return new MarkdownDictionaryFormatter();
       case 'Notion':
         return new NotionDictionaryFormatter();
+      case 'Yaml':
+        return new YamlDictionaryFormatter();
       default:
         throw new Error(`Unknown format: ${format}`);
     }
