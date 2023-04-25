@@ -1,5 +1,5 @@
 import { BlockObjectRequest } from '@notionhq/client/build/src/api-endpoints';
-import { Dictionary } from '../../dictionary/Dictionary';
+import { Dictionary } from '../../core/dictionary/Dictionary';
 
 export class ParagraphBlockGenerator {
 

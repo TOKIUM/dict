@@ -1,4 +1,4 @@
-import { DictionaryName } from '../../dictionary/DictionaryName';
+import { DictionaryName } from '../../core/dictionary/DictionaryName';
 
 export class LinkedDictionaryName {
   constructor(

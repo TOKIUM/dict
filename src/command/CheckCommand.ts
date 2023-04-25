@@ -1,11 +1,11 @@
 import { exit } from 'process';
-import { CodeCommentParser } from '../parser/CodeCommentParser';
-import { CodeLanguage } from '../parser/CodeLanguage';
-import { CodeText } from '../parser/CodeText';
-import { Dictionary } from '../dictionary/Dictionary';
+import { CodeCommentParser } from '../core/code/CodeCommentParser';
+import { CodeLanguage } from '../core/code/CodeLanguage';
+import { CodeText } from '../core/code/CodeText';
+import { Dictionary } from '../core/dictionary/Dictionary';
 import { listFiles } from '../util/files';
 
-export class Check {
+export class CheckCommand {
   static async execute(
     filePaths: string[],
   ): Promise<void> {

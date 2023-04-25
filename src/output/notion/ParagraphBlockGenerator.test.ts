@@ -1,6 +1,6 @@
-import { Dictionary } from '../../dictionary/Dictionary';
-import { DictionaryDescription } from '../../dictionary/DictionaryDescription';
-import { DictionaryName } from '../../dictionary/DictionaryName';
+import { Dictionary } from '../../core/dictionary/Dictionary';
+import { DictionaryDescription } from '../../core/dictionary/DictionaryDescription';
+import { DictionaryName } from '../../core/dictionary/DictionaryName';
 import { ParagraphBlockGenerator } from './ParagraphBlockGenerator';
 
 describe('ParagraphBlockGenerator', () => {

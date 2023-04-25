@@ -1,17 +1,16 @@
 import { exit } from 'process';
-import { CodeCommentParser } from '../parser/CodeCommentParser';
-import { CodeLanguage } from '../parser/CodeLanguage';
-import { CodeText } from '../parser/CodeText';
-import { Dictionary } from '../dictionary/Dictionary';
+import { CodeCommentParser } from '../core/code/CodeCommentParser';
+import { CodeLanguage } from '../core/code/CodeLanguage';
+import { CodeText } from '../core/code/CodeText';
+import { Dictionary } from '../core/dictionary/Dictionary';
 import { listFiles } from '../util/files';
-import { DictionaryExporter } from '../exporter/DictionaryExporter';
-import { Format } from '../exporter/Format';
+import { Output } from '../output/Output';
 
-export class Generate {
+export class GenerateCommand {
   static async execute(
     args: string[],
   ): Promise<void> {
-    const format = Format.from(args[0]);
+    const format = args[0];
     const filePaths = args.slice(1);
     const extractedPaths = filePaths.flatMap(listFiles);
     const texts = await Promise.all(extractedPaths.map(filepath => CodeText.from(filepath)));
@@ -29,8 +28,8 @@ export class Generate {
       exit(1);
     }
 
-    const documentExporter = DictionaryExporter.from(format);
-    await documentExporter.export(outputs);
+    const output = Output.from(format);
+    await output.exec(outputs);
     exit(0);
   }
 }

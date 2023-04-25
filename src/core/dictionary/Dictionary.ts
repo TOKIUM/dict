@@ -1,4 +1,4 @@
-import { CodeComment } from '../parser/CodeComment';
+import { CodeComment } from '../code/CodeComment';
 import { DictionaryDescription } from './DictionaryDescription';
 import { DictionaryName } from './DictionaryName';
 

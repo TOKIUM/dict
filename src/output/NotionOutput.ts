@@ -1,47 +1,13 @@
-import { Dictionary } from '../dictionary/Dictionary';
-import { Format } from './Format';
+import { Dictionary } from '../core/dictionary/Dictionary';
 import { Client } from '@notionhq/client';
 import { ParagraphBlockObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { ParagraphBlockGenerator } from './notion/ParagraphBlockGenerator';
 import { rateLimitedSequentially } from '../util/promises';
 import { LinkedDictionaryName } from './notion/LinkedDictionaryName';
 import { LinkedRichTextGenerator } from './notion/LinkedRichTextGenerator';
+import { Output } from './Output';
 
-interface DictionaryExporter {
-  export(dictionaries: Dictionary[]): Promise<void>;
-}
-
-export class MarkdownDictionaryFormatter implements DictionaryExporter {
-  async export(dictionaries: Dictionary[]): Promise<void> {
-    const message = dictionaries.map((dictionary) => {
-      const headName = dictionary.name.names[0];
-      const aliasNames = dictionary.name.names.slice(1);
-      const nameLine = `## ${headName}`;
-      const descriptionHeaderLine = '### 説明';
-      const descriptionContentLine = dictionary.description.value;
-      const aliasHeaderLine = aliasNames.length > 0 ? '### 別名' : '';
-      const aliasContentLine = aliasNames.map((aliasName) => `- ${aliasName}`).join('\n');
-      const developerHeaderLine = '### 開発者向け情報';
-      const developerContentLine = `${dictionary.targetFilePath} L${dictionary.targetLine + 1}`;
-
-      return [
-        nameLine,
-        descriptionHeaderLine,
-        descriptionContentLine,
-        aliasHeaderLine,
-        aliasContentLine,
-        developerHeaderLine,
-        developerContentLine,
-      ].join('\n');
-    }).join('\n\n')
-
-    console.log(message);
-
-    return Promise.resolve();
-  }
-}
-
-export class NotionDictionaryFormatter implements DictionaryExporter {
+export class NotionOutput implements Output {
   private notion: Client;
   private pageId: string;
 
@@ -57,7 +23,7 @@ export class NotionDictionaryFormatter implements DictionaryExporter {
     this.pageId = page;
   }
 
-  async export(dictionaries: Dictionary[]): Promise<void> {
+  async exec(dictionaries: Dictionary[]): Promise<void> {
     // notionの更新API等はページまるごと更新するようなことができないので、いったんすべて消したうえで再度追加する
     // 追加した後に各ブロック内の説明文に、用語ごとにリンクを貼って再度更新することで、はてなブログのように用語間の遷移をやりやすくする
     // 1. 既存ページ内のクリーンアップ
@@ -95,43 +61,6 @@ export class NotionDictionaryFormatter implements DictionaryExporter {
         });
       },
     );
-  }
-}
-
-export class YamlDictionaryFormatter implements DictionaryExporter {
-  async export(dictionaries: Dictionary[]): Promise<void> {
-    const entry = dictionaries.map((dictionary) => {
-      const mainNamePart = `- name: ${dictionary.name.names[0]}`;
-      const descriptionPart = `  description: ${dictionary.description.value}`;
-      const aliasesHeaderPart = dictionary.name.aliasNames.length > 0 ? ['  aliases:'] : []; 
-      const aliasesBodyPart = dictionary.name.aliasNames.map((aliasName) => `    - ${aliasName}`);
-
-      return [
-        mainNamePart,
-        descriptionPart,
-        ...aliasesHeaderPart,
-        ...aliasesBodyPart,
-      ].join('\n');
-    }).join('\n');
-
-    console.log(entry);
-
-    return Promise.resolve();
-  }
-}
-
-export const DictionaryExporter = {
-  from(format: Format): DictionaryExporter {
-    switch (format) {
-      case 'Markdown':
-        return new MarkdownDictionaryFormatter();
-      case 'Notion':
-        return new NotionDictionaryFormatter();
-      case 'Yaml':
-        return new YamlDictionaryFormatter();
-      default:
-        throw new Error(`Unknown format: ${format}`);
-    }
   }
 }
 

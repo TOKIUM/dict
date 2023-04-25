@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { Check } from './cli/Check';
-import { Generate } from './cli/Generate';
+import { CheckCommand } from './command/CheckCommand';
+import { GenerateCommand } from './command/GenerateCommand';
 
 interface CommandArguments {
   command: 'check' | 'generate'
@@ -38,8 +38,8 @@ const CommandArguments = {
   }
 
   try {
-    if (commandArgs.command === 'check') await Check.execute(commandArgs.args);
-    if (commandArgs.command === 'generate') await Generate.execute(commandArgs.args);
+    if (commandArgs.command === 'check') await CheckCommand.execute(commandArgs.args);
+    if (commandArgs.command === 'generate') await GenerateCommand.execute(commandArgs.args);
   } catch (err) {
     console.error(err);
     process.exit(1);
