@@ -2,23 +2,14 @@ const NAME_MARKER = '@dict-name';
 
 export class DictionaryName {
   constructor(
-    public names: string[],
+    public value: string,
   ) {}
 
   static fromLines(lines: string[]): DictionaryName | undefined {
     const found = lines.find(line => line.startsWith(NAME_MARKER));
-
+    
     if (!found) return undefined;
 
-    const normalized = found.replace(NAME_MARKER, '').split(',').map(name => name.trim());
-    return new DictionaryName(normalized);
-  }
-  
-  get mainName(): string {
-    return this.names[0];
-  }
-
-  get aliasNames(): string[] {
-    return this.names.slice(1);
+    return new DictionaryName(found.replace(NAME_MARKER, '').trim());
   }
 }

@@ -1,4 +1,4 @@
-import { DictionaryName } from '../../core/dictionary/DictionaryName';
+import { Dictionary } from '../../core/dictionary/Dictionary';
 
 export class LinkedDictionaryName {
   constructor(
@@ -6,12 +6,16 @@ export class LinkedDictionaryName {
     public readonly link: string,
   ) {}
 
-  static from(pageId: string, dictionaryName: DictionaryName, blockId: string): LinkedDictionaryName[] {
+  static from(pageId: string, name: string, blockId: string): LinkedDictionaryName {
     const noHyphenBlockId = blockId.replace(/-/g, '');
-    return dictionaryName.names.map((name) => new LinkedDictionaryName(name, `https://www.notion.so/${pageId}#${noHyphenBlockId}`));
+    return new LinkedDictionaryName(name, `https://www.notion.so/${pageId}#${noHyphenBlockId}`);
   }
 
-  static fromMulti(pageId: string, dictionaryNames: DictionaryName[], blockIds: string[]): LinkedDictionaryName[] {
-    return dictionaryNames.flatMap((dictionaryName, index) => LinkedDictionaryName.from(pageId, dictionaryName, blockIds[index]));
+  static fromMulti(pageId: string, dictionaries: Dictionary[], blockIds: string[]): LinkedDictionaryName[] {
+    return dictionaries.flatMap((dictionary, index) => {
+      const nameLink = LinkedDictionaryName.from(pageId, dictionary.name.value, blockIds[index])
+      const aliasLinks = dictionary.alias.map((alias) => LinkedDictionaryName.from(pageId, alias.value, blockIds[index]));
+      return [nameLink, ...aliasLinks];
+    });
   }
 }

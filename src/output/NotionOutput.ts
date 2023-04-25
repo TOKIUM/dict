@@ -25,7 +25,7 @@ export class NotionOutput implements Output {
 
   async exec(dictionaries: Dictionary[]): Promise<void> {
     // notionの更新API等はページまるごと更新するようなことができないので、いったんすべて消したうえで再度追加する
-    // 追加した後に各ブロック内の説明文に、用語ごとにリンクを貼って再度更新することで、はてなブログのように用語間の遷移をやりやすくする
+    // 追加した後に各ブロック内の説明文に、用語ごとにリンクを貼って再度更新することで、用語間の遷移をやりやすくする
     // 1. 既存ページ内のクリーンアップ
     const existingBlocks = await this.notion.blocks.children.list({ block_id: this.pageId });
     await rateLimitedSequentially(existingBlocks.results, 3, (block) => this.notion.blocks.delete({ block_id: block.id }))
@@ -48,7 +48,7 @@ export class NotionOutput implements Output {
         return paragraphChildren[0];
       }
     );
-    const linkedDictionaryNames = LinkedDictionaryName.fromMulti(this.pageId, dictionaries.map((dictionary) => dictionary.name), createdParagraphs.map((paragraph) => paragraph.id));
+    const linkedDictionaryNames = LinkedDictionaryName.fromMulti(this.pageId, dictionaries, createdParagraphs.map((paragraph) => paragraph.id));
     await rateLimitedSequentially(
       createdDescriptionParagraphs,
       3,

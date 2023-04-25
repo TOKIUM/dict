@@ -1,5 +1,5 @@
 export interface CodeComment {
-  targetType: 'class';
+  targetType: 'class' | 'method';
   targetName: string;
   targetLine: number;
   targetFilePath: string;

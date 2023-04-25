@@ -1,4 +1,4 @@
-import { RubyCodeCommentParser } from './CodeCommentParser';
+import { RubyCodeCommentParser } from './RubyCodeCommentParser';
 
 describe('RubyCodeCommentParser', () => {
   describe('parse', () => {
@@ -39,6 +39,8 @@ end
       const comments = parser.parse('example.rb', lines);
       expect(comments).toEqual([
         { targetType: 'class', targetName: 'AA', lines: ['class comment 1', 'class comment 2'], targetFilePath: 'example.rb', targetLine: 8 },
+        { targetType: 'method', targetName: 'foo', lines: ['method comment 1', 'method comment 2'], targetFilePath: 'example.rb', targetLine: 11 },
+        { targetType: 'method', targetName: 'bar', lines: [], targetFilePath: 'example.rb', targetLine: 16 },
         { targetType: 'class', targetName: 'B', lines: ['class comment 3'], targetFilePath: 'example.rb', targetLine: 24 },
         { targetType: 'class', targetName: 'C', lines: [], targetFilePath: 'example.rb', targetLine: 27 },
       ]);

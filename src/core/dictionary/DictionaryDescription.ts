@@ -1,15 +1,18 @@
+import { DictionaryTarget } from './DictionaryTarget';
+
 const DESCRIPTION_MARKER = '@dict-desc';
 
 export class DictionaryDescription {
   constructor(
-    public value: string,
+    public readonly target: DictionaryTarget,
+    public readonly value: string,
   ) {}
 
-  static fromLines(lines: string[]): DictionaryDescription | undefined { 
-    const found = lines.find(line => line.startsWith(DESCRIPTION_MARKER));
+  static fromLines(target: DictionaryTarget, lines: string[]): DictionaryDescription[] { 
+    const found = lines.filter(line => line.startsWith(DESCRIPTION_MARKER));
 
-    if (!found) return undefined;
-
-    return new DictionaryDescription(found.replace(DESCRIPTION_MARKER, '').trim());
+    return found.map((line) => {
+      return new DictionaryDescription(target, line.replace(DESCRIPTION_MARKER, '').trim());
+    });
   }
 }

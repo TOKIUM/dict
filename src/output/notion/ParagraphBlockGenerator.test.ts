@@ -1,11 +1,14 @@
 import { Dictionary } from '../../core/dictionary/Dictionary';
+import { DictionaryAlias } from '../../core/dictionary/DictionaryAlias';
 import { DictionaryDescription } from '../../core/dictionary/DictionaryDescription';
 import { DictionaryName } from '../../core/dictionary/DictionaryName';
+import { DictionaryTarget } from '../../core/dictionary/DictionaryTarget';
 import { ParagraphBlockGenerator } from './ParagraphBlockGenerator';
 
 describe('ParagraphBlockGenerator', () => {
   it('should generate a paragraph block', () => {
-    const dictionary = new Dictionary('User', 'class', 5, 'app/models/user.rb', new DictionaryName(['ユーザー', '従業員']), new DictionaryDescription('ユーザーです') )
+    const dictionaryTarget = new DictionaryTarget('User', 'class', 5, 'app/models/user.rb');
+    const dictionary = new Dictionary(new DictionaryName('ユーザー'), [new DictionaryAlias('従業員')], [new DictionaryDescription(dictionaryTarget, 'ユーザーです')], [])
     const actual = ParagraphBlockGenerator.fromDictionary(dictionary);
 
     expect(actual).toEqual({
@@ -32,22 +35,6 @@ describe('ParagraphBlockGenerator', () => {
                   type: 'bulleted_list_item',
                   bulleted_list_item: {
                     rich_text: [{ type: 'text', text: { content: '従業員' } }],
-                  },
-                },
-              ],
-            },
-          },
-          {
-            object: 'block',
-            type: 'paragraph',
-            paragraph: {
-              rich_text: [{ type: 'text', text: { content: '開発者向け情報' }, annotations: { bold: true } }],
-              children: [
-                {
-                  object: 'block',
-                  type: 'paragraph',
-                  paragraph: {
-                    rich_text: [{ type: 'text', text: { content: 'app/models/user.rb L6' }, annotations: { code: true } }],
                   },
                 },
               ],
