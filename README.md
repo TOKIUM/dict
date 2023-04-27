@@ -29,7 +29,6 @@ notion形式もサポートされていますが、NOTION_TOKENとNOTION_PAGE_ID
 ```bash
 $ dict generate --format <markdown or yaml or notion> --input <path/to/dict/dir> --output <path/to/output/file>
 ```
-```
 
 ### check
 checkコマンドで辞書が書かれているかを確認できます。
