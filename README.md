@@ -27,14 +27,15 @@ $ npm install -g @tokium/dict
 generateコマンドで辞書を作成できます。markdown,yaml形式であれば、下記のコマンドで辞書を標準出力できます。
 notion形式もサポートされていますが、NOTION_TOKENとNOTION_PAGE_IDが環境変数に必要です。
 ```bash
-$ dict generate <markdown or yaml> <path/to/dict/dir>
+$ dict generate --format <markdown or yaml or notion> --input <path/to/dict/dir> --output <path/to/output/file>
+```
 ```
 
 ### check
 checkコマンドで辞書が書かれているかを確認できます。
-現在、Rubyのクラスに対してのみチェックできます。
+現在、Rubyのクラス・メソッドに対してのみチェックできます。
 ```bash
-$ dict check <path/to/dict/dir>
+$ dict check --type <class or method> --input <path/to/dict/dir>
 ```
 
 ## 開発

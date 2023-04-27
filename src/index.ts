@@ -42,7 +42,7 @@ const CommandArguments = {
             .array('type').alias('t', 'type').describe('type', 'Target object type.').demandOption('type')
         },
         async (argv) => {
-          const statusCode = await CheckCommand.execute(argv.input.map((v) => v.toString()), argv.type.map((v) => v.toString()));
+          const statusCode = await CheckCommand.execute(argv.type.map((v) => v.toString()), argv.input.map((v) => v.toString()));
           process.exit(statusCode);
         },
       )
