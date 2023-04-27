@@ -4,16 +4,42 @@
 ```ruby
 # 入力例
 
-# @dict-name ユーザー,従業員
+# @dict-name ユーザー
+# @dict-alias 従業員
 # @dict-desc TOKIUMを契約した会社の従業員です。ログインすることで、TOKIUMの機能を利用することができます。
-class User; end
+class User
+  # @dict-name ユーザー
+  # @dict-feature-name ログイン
+  # @dict-feature-desc メールアドレスとパスワードを使ってログインします。
+  def login
+  end
+end
+```
+
+yaml形式で出力すると、下記のようになります。
+```yaml
+- name: ユーザー
+  alias:
+    - 従業員
+  description:
+    - TOKIUMを契約した会社の従業員です。ログインすることで、TOKIUMの機能を利用することができます。
+  features:
+    - name: ログイン
+      description: 
+        - メールアドレスとパスワードを使ってログインします。
 ```
 
 現在、下記の形式のコメントから辞書を作成することができます。
 - `@dict-name`
-  - 辞書の名前を指定します。カンマ区切りで、最初の名前を主な名前、残りを別名として複数指定することができます。
+  - 辞書の名前を指定します。
+- `@dict-alias`
+  - 辞書の別名を指定します。
 - `@dict-desc`
   - 辞書の説明文を指定します。
+- `@dict-feature-name`
+  - 機能名を指定します。
+- `@dict-feature-desc`
+  - 機能の説明文を指定します。
 
 ## 使い方
 ツールはgithub packagesに公開しています。下記のコマンドでインストールしてください。
