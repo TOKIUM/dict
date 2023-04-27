@@ -38,6 +38,8 @@ end
       const lines = text.split('\n').map(line => line.trim());
       const comments = parser.parse('example.rb', lines);
       expect(comments).toEqual([
+        { targetType: 'unknown', targetName: undefined, lines: ['frozen_string_literal: true'], targetFilePath: 'example.rb', targetLine: 2 },
+        { targetType: 'unknown', targetName: undefined, lines: ['module comment 1', 'module comment 2'], targetFilePath: 'example.rb', targetLine: 5 },
         { targetType: 'class', targetName: 'AA', lines: ['class comment 1', 'class comment 2'], targetFilePath: 'example.rb', targetLine: 8 },
         { targetType: 'method', targetName: 'foo', lines: ['method comment 1', 'method comment 2'], targetFilePath: 'example.rb', targetLine: 11 },
         { targetType: 'method', targetName: 'bar', lines: [], targetFilePath: 'example.rb', targetLine: 16 },
