@@ -9,12 +9,17 @@ export class DictionaryFeature {
     public descriptions: DictionaryFeatureDescription[],
   ) {}
 
-  static fromLines(target: DictionaryTarget, lines: string[]): DictionaryFeature | undefined {
-    const name = DictionaryFeatureName.fromLines(lines);
+  static fromLines(target: DictionaryTarget, lines: string[], parent?: DictionaryFeature): DictionaryFeature | undefined {
+    const name = DictionaryFeatureName.fromLines(lines) ?? parent?.name;
     const desc = DictionaryFeatureDescription.fromLines(lines);
 
     if (name === undefined) return undefined; 
 
     return new DictionaryFeature(target, name, desc);
+  }
+
+  merge(right: DictionaryFeature): DictionaryFeature {
+    const mergedDescriptions = this.descriptions.concat(right.descriptions);
+    return new DictionaryFeature(this.target, this.name, mergedDescriptions);
   }
 }

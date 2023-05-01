@@ -1,4 +1,6 @@
 import { DictionaryFeature } from './DictionaryFeature';
+import { DictionaryFeatureDescription } from './DictionaryFeatureDescription';
+import { DictionaryFeatureName } from './DictionaryFeatureName';
 import { DictionaryTarget } from './DictionaryTarget';
 
 describe('DictionaryFeature', () => {
@@ -21,6 +23,12 @@ describe('DictionaryFeature', () => {
       const lines = ['@dict-feature-name Create user', '@dict-feature-desc Create user description'];
       const actual = DictionaryFeature.fromLines(target, lines);
       expect(actual).toBeDefined();
+    });
+    it('should return a DictionaryFeature if description and parent', () => {
+      const target = new DictionaryTarget('User', 'class', 1, 'app/models/user.rb');
+      const lines = ['@dict-feature-desc Create user description'];
+      const parent = new DictionaryFeature(target, new DictionaryFeatureName('Create user'), [new DictionaryFeatureDescription('Create user description')]);
+      expect(parent).toBeDefined();
     });
   });
 });

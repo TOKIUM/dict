@@ -15,7 +15,7 @@ export class GenerateCommand {
 
     const outputs = texts.flatMap((text) => {
       const comments = CodeCommentParser.parse(text.filepath, text.lines);
-      const dicts = comments.map(comment => Dictionary.fromComment(comment)).filter((dict) => dict !== undefined);
+      const dicts = Dictionary.fromComments(comments).filter((dict) => dict !== undefined);
       return dicts;
     });
 
