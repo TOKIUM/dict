@@ -9,6 +9,9 @@ describe('TypescriptCodeCommentParser', () => {
 // class comment 1
 class A {
   constructor() {}
+  
+  // class method comment 1
+  method1() {}
 }
 
 /**
@@ -32,9 +35,10 @@ export function D() {}
       const comments = parser.parse('example.ts', lines);
       expect(comments).toEqual([
         { targetType: 'class', targetName: 'A', lines: ['class comment 1'], targetFilePath: 'example.ts', targetLine: 2 },
-        { targetType: 'method', targetName: 'B', lines: ['', 'method comment 1', 'method comment 2', ''], targetFilePath: 'example.ts', targetLine: 10 },
-        { targetType: 'class', targetName: 'C', lines: ['', 'class comment 3', ''], targetFilePath: 'example.ts', targetLine: 16 },
-        { targetType: 'method', targetName: 'D', lines: ['method comment 4'], targetFilePath: 'example.ts', targetLine: 20 },
+        { targetType: 'unknown', targetName: undefined, lines: ['class method comment 1'], targetFilePath: 'example.ts', targetLine: 6 },
+        { targetType: 'method', targetName: 'B', lines: ['', 'method comment 1', 'method comment 2', ''], targetFilePath: 'example.ts', targetLine: 13 },
+        { targetType: 'class', targetName: 'C', lines: ['', 'class comment 3', ''], targetFilePath: 'example.ts', targetLine: 19 },
+        { targetType: 'method', targetName: 'D', lines: ['method comment 4'], targetFilePath: 'example.ts', targetLine: 23 },
       ]);
     });
   });

@@ -26,6 +26,11 @@ export class TypescriptCodeCommentParser implements CodeCommentParser {
         return { accComments: [...acc.accComments, newComment], accLines: [] };
       }
 
+      if (acc.accLines.length > 0 ) {
+        const newComment: CodeComment = { targetType: 'unknown', targetName: undefined, lines: acc.accLines, targetLine: index, targetFilePath: filePath };
+        return { accComments: [...acc.accComments, newComment], accLines: [] };
+      }
+
       return { accComments: acc.accComments, accLines: [] };
     }, { accComments: [] as CodeComment[], accLines: [] as string[] });
     
