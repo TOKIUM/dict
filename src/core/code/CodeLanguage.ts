@@ -1,4 +1,4 @@
-export type CodeLanguage = 'Ruby'
+export type CodeLanguage = 'Ruby' | 'Typescript'
 
 export const CodeLanguage = {
   from(filepath: string): CodeLanguage {
@@ -7,6 +7,8 @@ export const CodeLanguage = {
     switch (extension) {
       case 'rb':
         return 'Ruby';
+      case 'ts':
+        return 'Typescript';
       default:
         throw new Error(`Unknown extension: ${extension}`);
     }

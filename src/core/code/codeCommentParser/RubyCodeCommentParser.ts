@@ -7,7 +7,6 @@ export class RubyCodeCommentParser implements CodeCommentParser {
       // accumulate comments
       if (line.startsWith('#')) return { accComments: acc.accComments, accLines: [...acc.accLines, line.replace(/^#/, '').trim()] };
 
-      // ignore empty line
       if (line.startsWith('class ') && !line.startsWith('class << self')) {
         const newComment: CodeComment = { targetType: 'class', targetName: line.split(' ')[1], lines: acc.accLines, targetLine: index, targetFilePath: filePath };
         return { accComments: [...acc.accComments, newComment], accLines: [] };
