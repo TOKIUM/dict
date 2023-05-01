@@ -18,6 +18,25 @@ export class DictionaryFeature {
     return new DictionaryFeature(target, name, desc);
   }
 
+  static mergeAll(features: DictionaryFeature[]): DictionaryFeature[] {
+    const result: DictionaryFeature[] = features.reduce(
+      (prev, curr) => {
+        const foundIndex = prev.findIndex((p) => p.name.value === curr.name.value);
+
+        if (foundIndex < 0) return prev.concat(curr);
+
+        const found = prev[foundIndex];
+        const merged = found ? found.merge(curr) : curr;
+        prev[foundIndex] = merged;
+
+        return prev;
+      },
+      [] as DictionaryFeature[],
+    );
+
+    return result;
+  }
+
   merge(right: DictionaryFeature): DictionaryFeature {
     const mergedDescriptions = this.descriptions.concat(right.descriptions);
     return new DictionaryFeature(this.target, this.name, mergedDescriptions);

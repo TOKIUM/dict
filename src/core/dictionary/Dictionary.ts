@@ -48,7 +48,7 @@ export class Dictionary {
 
         return prev;
       },
-      [],
+      [] as Dictionary[],
     );
 
     return result;
@@ -57,13 +57,7 @@ export class Dictionary {
   merge(right: Dictionary): Dictionary {
     const mergedAlias = this.alias.concat(right.alias);
     const mergedDescription = this.descriptions.concat(right.descriptions);
-    const mergedFeatures = right.features.reduce((prev, curr) => {
-      const foundIndex = prev.findIndex((p) => p.name.value === curr.name.value);
-      const found = foundIndex >= 0 ? prev[foundIndex] : undefined;
-      const merged = found ? found.merge(curr) : undefined;
-      const replaced = merged ? prev.map((p, i) => i === foundIndex ? merged : p) : prev.concat(curr);
-      return replaced;
-    }, this.features);
+    const mergedFeatures = DictionaryFeature.mergeAll(this.features.concat(right.features));
 
     return new Dictionary(this.name, mergedAlias, mergedDescription, mergedFeatures);
   }
