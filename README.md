@@ -21,11 +21,11 @@ yaml形式で出力すると、下記のようになります。
 - name: ユーザー
   alias:
     - 従業員
-  description:
+  descriptions:
     - TOKIUMを契約した会社の従業員です。ログインすることで、TOKIUMの機能を利用することができます。
   features:
     - name: ログイン
-      description: 
+      descriptions: 
         - メールアドレスとパスワードを使ってログインします。
 ```
 
@@ -35,11 +35,11 @@ yaml形式で出力すると、下記のようになります。
 - `@dict-alias`
   - 辞書の別名を指定します。
 - `@dict-desc`
-  - 辞書の説明文を指定します。
+  - 辞書の名前に対して、辞書の説明文を指定します。
 - `@dict-feature-name`
-  - 機能名を指定します。
+  - 辞書の名前に対して、機能名を指定します。
 - `@dict-feature-desc`
-  - 機能の説明文を指定します。
+  - 機能名に対して、説明文を指定します。
 
 ## 使い方
 ツールはgithub packagesに公開しています。下記のコマンドでインストールしてください。
@@ -59,6 +59,7 @@ $ dict generate --format <markdown or yaml or notion> --input <path/to/dict/dir>
 ### check
 checkコマンドで辞書が書かれているかを確認できます。
 現在、Rubyのクラス・メソッドに対してのみチェックできます。
+`@dict-desc`もしくは`@dict-feature-desc`が書かれていない場合、エラーが発生します。
 ```bash
 $ dict check --type <class or method> --input <path/to/dict/dir>
 ```

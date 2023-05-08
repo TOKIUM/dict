@@ -15,12 +15,12 @@ export class CheckCommand {
       const comments = CodeCommentParser.parse(text.filepath, text.lines);
       const dicts = Dictionary.fromComments(comments);
       const descTargets = dicts.flatMap((dict) => dict.descriptions.map((desc) => desc.target.targetLine));
-      const featureTargets = dicts.flatMap((dict) => dict.features.flatMap((f) => f.target.targetLine));
-      return comments.filter((comment, index) => {
+      const featureDescTargets = dicts.flatMap((dict) => dict.features.flatMap((feature) => feature.descriptions.map((desc) => desc.target.targetLine)));
+      return comments.filter((comment) => {
         if (comment.targetType === undefined) { return false; }
         if (!types.includes(comment.targetType)) { return false; }
 
-        const found = descTargets.includes(comment.targetLine) || featureTargets.includes(comment.targetLine);
+        const found = descTargets.includes(comment.targetLine) || featureDescTargets.includes(comment.targetLine);
 
         return !found;
       });

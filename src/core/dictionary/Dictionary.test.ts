@@ -15,7 +15,7 @@ describe('Dictionary', () => {
         new DictionaryName(target, 'User'),
         [new DictionaryAlias('user')],
         [new DictionaryDescription(target, 'User left description')],
-        [new DictionaryFeature(target, new DictionaryFeatureName('User left feature'), [new DictionaryFeatureDescription('User left feature description')])],
+        [new DictionaryFeature(new DictionaryFeatureName(target, 'User left feature'), [new DictionaryFeatureDescription(target, 'User left feature description')])],
       );
 
       const right = new Dictionary(
@@ -23,8 +23,8 @@ describe('Dictionary', () => {
         [new DictionaryAlias('system user')],
         [new DictionaryDescription(target, 'User right description')],
         [
-          new DictionaryFeature(target, new DictionaryFeatureName('User left feature'), [new DictionaryFeatureDescription('User left feature description 2')]),
-          new DictionaryFeature(target, new DictionaryFeatureName('User right feature'), [new DictionaryFeatureDescription('User right feature description')])
+          new DictionaryFeature(new DictionaryFeatureName(target, 'User left feature'), [new DictionaryFeatureDescription(target, 'User left feature description 2')]),
+          new DictionaryFeature(new DictionaryFeatureName(target, 'User right feature'), [new DictionaryFeatureDescription(target, 'User right feature description')])
         ],
       );
 
@@ -35,8 +35,8 @@ describe('Dictionary', () => {
         [new DictionaryAlias('user'), new DictionaryAlias('system user')],
         [new DictionaryDescription(target, 'User left description'), new DictionaryDescription(target, 'User right description')],
         [
-          new DictionaryFeature(target, new DictionaryFeatureName('User left feature'), [new DictionaryFeatureDescription('User left feature description'), new DictionaryFeatureDescription('User left feature description 2')]),
-          new DictionaryFeature(target, new DictionaryFeatureName('User right feature'), [new DictionaryFeatureDescription('User right feature description')]),
+          new DictionaryFeature(new DictionaryFeatureName(target, 'User left feature'), [new DictionaryFeatureDescription(target, 'User left feature description'), new DictionaryFeatureDescription(target, 'User left feature description 2')]),
+          new DictionaryFeature(new DictionaryFeatureName(target, 'User right feature'), [new DictionaryFeatureDescription(target, 'User right feature description')]),
         ],
       ));
     });

@@ -4,18 +4,17 @@ import { DictionaryTarget } from './DictionaryTarget';
 
 export class DictionaryFeature {
   constructor(
-    public target: DictionaryTarget,
     public name: DictionaryFeatureName,
     public descriptions: DictionaryFeatureDescription[],
   ) {}
 
   static fromLines(target: DictionaryTarget, lines: string[], parent?: DictionaryFeature): DictionaryFeature | undefined {
-    const name = DictionaryFeatureName.fromLines(lines) ?? parent?.name;
-    const desc = DictionaryFeatureDescription.fromLines(lines);
+    const name = DictionaryFeatureName.fromLines(target, lines) ?? parent?.name;
+    const desc = DictionaryFeatureDescription.fromLines(target, lines);
 
     if (name === undefined) return undefined; 
 
-    return new DictionaryFeature(target, name, desc);
+    return new DictionaryFeature(name, desc);
   }
 
   static mergeAll(features: DictionaryFeature[]): DictionaryFeature[] {
@@ -39,6 +38,6 @@ export class DictionaryFeature {
 
   merge(right: DictionaryFeature): DictionaryFeature {
     const mergedDescriptions = this.descriptions.concat(right.descriptions);
-    return new DictionaryFeature(this.target, this.name, mergedDescriptions);
+    return new DictionaryFeature(this.name, mergedDescriptions);
   }
 }

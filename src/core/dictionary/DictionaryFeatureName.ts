@@ -1,15 +1,18 @@
+import { DictionaryTarget } from './DictionaryTarget';
+
 const FEATURE_NAME_MARKER = '@dict-feature-name';
 
 export class DictionaryFeatureName {
   constructor(
-    public value: string,
+    public readonly target: DictionaryTarget,
+    public readonly value: string,
   ) {}
 
-  static fromLines(lines: string[]): DictionaryFeatureName | undefined {
+  static fromLines(target: DictionaryTarget, lines: string[]): DictionaryFeatureName | undefined {
     const found = lines.find(line => line.startsWith(FEATURE_NAME_MARKER));
     
     if (!found) return undefined;
 
-    return new DictionaryFeatureName(found.replace(FEATURE_NAME_MARKER, '').trim());
+    return new DictionaryFeatureName(target, found.replace(FEATURE_NAME_MARKER, '').trim());
   }
 }
