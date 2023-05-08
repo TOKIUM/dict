@@ -16,7 +16,7 @@ export class Dictionary {
   static fromComment(comment: CodeComment, parent?: Dictionary): Dictionary | undefined {
     const { targetName, targetType, targetLine, targetFilePath } = comment;
     const dictionaryTarget = new DictionaryTarget(targetName, targetType, targetLine, targetFilePath);
-    const dictionaryName = DictionaryName.fromLines(comment.lines) ?? parent?.name;
+    const dictionaryName = DictionaryName.fromLines(dictionaryTarget, comment.lines) ?? parent?.name;
     const dictionaryAlias = DictionaryAlias.fromLines(comment.lines);
     const dictionaryDescription = DictionaryDescription.fromLines(dictionaryTarget, comment.lines);
     const parentFeature = (parent?.features.length > 0 && dictionaryName.value === parent?.name.value) ? parent?.features[parent.features.length - 1] : undefined;

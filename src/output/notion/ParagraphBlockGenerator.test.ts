@@ -8,7 +8,7 @@ import { ParagraphBlockGenerator } from './ParagraphBlockGenerator';
 describe('ParagraphBlockGenerator', () => {
   it('should generate a paragraph block', () => {
     const dictionaryTarget = new DictionaryTarget('User', 'class', 5, 'app/models/user.rb');
-    const dictionary = new Dictionary(new DictionaryName('ユーザー'), [new DictionaryAlias('従業員')], [new DictionaryDescription(dictionaryTarget, 'ユーザーです')], [])
+    const dictionary = new Dictionary(new DictionaryName(dictionaryTarget, 'ユーザー'), [new DictionaryAlias('従業員')], [new DictionaryDescription(dictionaryTarget, 'ユーザーです')], [])
     const actual = ParagraphBlockGenerator.fromDictionary(dictionary);
 
     expect(actual).toEqual({

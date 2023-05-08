@@ -10,8 +10,8 @@ import { YamlFormat } from './YamlFormat';
 describe('YamlFormat', () => {
   describe('format', () => {
     it('should return a string', () => {
-      const name = new DictionaryName('User');
       const target = new DictionaryTarget('User', 'class', 1, 'app/models/user.rb');
+      const name = new DictionaryName(target, 'User');
       const desc = [new DictionaryDescription(target, 'This is a user dictionary.')];
       const featureName = new DictionaryFeatureName('create');
       const featureDesc = new DictionaryFeatureDescription('Create a user.');

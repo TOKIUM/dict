@@ -13,8 +13,16 @@ export class CheckCommand {
 
     const outputs = texts.flatMap((text) => {
       const comments = CodeCommentParser.parse(text.filepath, text.lines);
-      return comments.filter(comment => {
-        return comment.targetType !== undefined && types.includes(comment.targetType) && !Dictionary.fromComment(comment);
+      const dicts = Dictionary.fromComments(comments);
+      const descTargets = dicts.flatMap((dict) => dict.descriptions.map((desc) => desc.target.targetLine));
+      const featureTargets = dicts.flatMap((dict) => dict.features.flatMap((f) => f.target.targetLine));
+      return comments.filter((comment, index) => {
+        if (comment.targetType === undefined) { return false; }
+        if (!types.includes(comment.targetType)) { return false; }
+
+        const found = descTargets.includes(comment.targetLine) || featureTargets.includes(comment.targetLine);
+
+        return !found;
       });
     });
 
