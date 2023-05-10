@@ -1,6 +1,6 @@
 {
   "name": "@tokiumjp/dict",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "description": "Add dict command.",
   "license": "MIT",
   "scripts": {
