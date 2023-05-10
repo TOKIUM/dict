@@ -1,4 +1,4 @@
-# @tokium/dict
+# @tokiumjs/dict
 ## 概要
 コード上のコメントから辞書を作成するツールです。現在Rubyのみ対応しています。
 ```ruby
@@ -6,7 +6,7 @@
 
 # @dict-name ユーザー
 # @dict-alias 従業員
-# @dict-desc TOKIUMを契約した会社の従業員です。ログインすることで、TOKIUMの機能を利用することができます。
+# @dict-desc 会社の従業員です。
 class User
   # @dict-name ユーザー
   # @dict-feature-name ログイン
@@ -22,7 +22,7 @@ yaml形式で出力すると、下記のようになります。
   alias:
     - 従業員
   descriptions:
-    - TOKIUMを契約した会社の従業員です。ログインすることで、TOKIUMの機能を利用することができます。
+    - 会社の従業員です。
   features:
     - name: ログイン
       descriptions: 
@@ -42,11 +42,8 @@ yaml形式で出力すると、下記のようになります。
   - 機能名に対して、説明文を指定します。
 
 ## 使い方
-ツールはgithub packagesに公開しています。下記のコマンドでインストールしてください。
 ```bash
-$ npm config set @tokium:registry https://npm.pkg.github.com
-$ npm login --registry=https://npm.pkg.github.com --scope=@tokium
-$ npm install -g @tokium/dict
+$ npm install @tokiumjp/dict
 ```
 
 ### generate
@@ -67,13 +64,3 @@ $ dict check --type <class or method> --input <path/to/dict/dir>
 ## 開発
 ### 環境構築
 devcontainerを用意しています。vscodeの`Remote-Containers`拡張をインストールして、`Remote-Containers: Reopen Folder in Container`を実行すると、開発環境が構築されます。
-
-### テスト
-テストはjestで実行されます。下記のコマンドでテストを実行できます。
-```bash
-$ npm test
-```
-
-### リリース
-リリースはgithub actionsで自動化されています。github画面内のActionsタブから、`Release`ワークフローを実行すると、リリースが行われます。
-入力値として、`patch`、`minor`、`major`のいずれかを指定してください。それぞれ、パッチバージョン、マイナーバージョン、メジャーバージョンが上がります。
