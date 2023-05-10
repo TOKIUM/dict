@@ -30,7 +30,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          registry-url: https://npm.pkg.github.com/
+          registry-url: https://registry.npmjs.org
       - run: npm ci
       - name: version push
         id: version
@@ -45,7 +45,7 @@ jobs:
       - run: npm run build
       - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
       - name: Create Release
         uses: actions/create-release@v1
         env:
