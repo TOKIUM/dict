@@ -2,6 +2,7 @@
   "name": "@tokiumjp/dict",
   "version": "0.1.21",
   "description": "Add dict command.",
+  "license": "MIT",
   "scripts": {
     "prestart": "npm run build",
     "start": "node ./dist/index.js",
