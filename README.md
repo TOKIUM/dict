@@ -8,7 +8,6 @@
 # @dict-alias 従業員
 # @dict-desc 会社の従業員です。
 class User
-  # @dict-name ユーザー
   # @dict-feature-name ログイン
   # @dict-feature-desc メールアドレスとパスワードを使ってログインします。
   def login
