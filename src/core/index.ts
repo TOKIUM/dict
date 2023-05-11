@@ -1,2 +1,2 @@
-export * as code from './code';
-export * as dictionary from './dictionary';
+export * from './code';
+export * from './dictionary';
