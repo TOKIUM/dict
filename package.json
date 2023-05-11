@@ -3,6 +3,8 @@
   "version": "0.1.23",
   "description": "Add dict command.",
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "prestart": "npm run build",
     "start": "node ./dist/index.js",
@@ -10,7 +12,7 @@
     "test": "jest"
   },
   "bin": {
-    "dict": "./dist/index.js"
+    "dict": "./dist/command/index.js"
   },
   "keywords": [],
   "devDependencies": {
