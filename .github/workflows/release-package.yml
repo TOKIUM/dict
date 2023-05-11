@@ -43,7 +43,7 @@ jobs:
           git push origin HEAD:main 
           echo "version=$(git describe --tags --abbrev=0)" >> "$GITHUB_ENV"
       - run: npm run build
-      - run: npm publish
+      - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
       - name: Create Release
