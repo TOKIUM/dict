@@ -7,7 +7,7 @@ describe('CodeLanguage', () => {
     });
 
     it ('throws an error', () => {
-      expect(() => CodeLanguage.from('foo.bar')).toThrowError('Unknown extension: bar');
+      expect(CodeLanguage.from('foo.bar')).toEqual('Unknown');
     });
   });
 });

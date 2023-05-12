@@ -1,4 +1,4 @@
-export type CodeLanguage = 'Ruby' | 'Typescript'
+export type CodeLanguage = 'Ruby' | 'Typescript' | 'Unknown';
 
 export const CodeLanguage = {
   from(filepath: string): CodeLanguage {
@@ -10,7 +10,7 @@ export const CodeLanguage = {
       case 'ts':
         return 'Typescript';
       default:
-        throw new Error(`Unknown extension: ${extension}`);
+        return 'Unknown';
     }
   }
 }

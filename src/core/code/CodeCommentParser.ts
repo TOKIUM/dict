@@ -2,6 +2,7 @@ import { CodeLanguage } from './CodeLanguage';
 import { CodeComment } from './CodeComment';
 import { RubyCodeCommentParser } from './codeCommentParser/RubyCodeCommentParser';
 import { TypescriptCodeCommentParser } from './codeCommentParser/TypescriptCodeCommentParser';
+import { UnknownCodeCommentParser } from './codeCommentParser/UnknownCodeCommentParser';
 
 export interface CodeCommentParser {
   parse(filePath: string, lines: string[]): CodeComment[];
@@ -15,7 +16,7 @@ export const CodeCommentParser = {
       case 'Typescript':
         return new TypescriptCodeCommentParser();
       default:
-        throw new Error(`Unknown language: ${language}`);
+        return new UnknownCodeCommentParser();
     }
   },
   parse(filePath: string, lines: string[]): CodeComment[] {
