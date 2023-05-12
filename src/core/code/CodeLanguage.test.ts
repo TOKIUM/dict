@@ -6,7 +6,7 @@ describe('CodeLanguage', () => {
       expect(CodeLanguage.from('foo.rb')).toEqual('Ruby');
     });
 
-    it ('throws an error', () => {
+    it ('returns Unknown', () => {
       expect(CodeLanguage.from('foo.bar')).toEqual('Unknown');
     });
   });
