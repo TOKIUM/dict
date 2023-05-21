@@ -1,4 +1,4 @@
-# @tokiumjs/dict
+# @tokiumjp/dict
 ## 概要
 コード上のコメントから辞書を作成するツールです。現在Rubyのみ対応しています。
 ```ruby
