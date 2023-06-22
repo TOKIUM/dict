@@ -58,10 +58,11 @@ export class Dictionary {
   }
 
   merge(right: Dictionary): Dictionary {
+    const mergedGroup = this.group ?? right.group;
     const mergedAlias = this.alias.concat(right.alias);
     const mergedDescription = this.descriptions.concat(right.descriptions);
     const mergedFeatures = DictionaryFeature.mergeAll(this.features.concat(right.features));
 
-    return new Dictionary(this.name, this.group, mergedAlias, mergedDescription, mergedFeatures);
+    return new Dictionary(this.name, mergedGroup, mergedAlias, mergedDescription, mergedFeatures);
   }
 }
