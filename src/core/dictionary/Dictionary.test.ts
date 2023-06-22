@@ -4,6 +4,7 @@ import { DictionaryDescription } from './DictionaryDescription';
 import { DictionaryFeature } from './DictionaryFeature';
 import { DictionaryFeatureDescription } from './DictionaryFeatureDescription';
 import { DictionaryFeatureName } from './DictionaryFeatureName';
+import { DictionaryGroup } from './DictionaryGroup';
 import { DictionaryName } from './DictionaryName';
 import { DictionaryTarget } from './DictionaryTarget';
 
@@ -13,6 +14,7 @@ describe('Dictionary', () => {
     it('merge left and right dictionary', () => {
       const left = new Dictionary(
         new DictionaryName(target, 'User'),
+        new DictionaryGroup('Organization'),
         [new DictionaryAlias('user')],
         [new DictionaryDescription(target, 'User left description')],
         [new DictionaryFeature(new DictionaryFeatureName(target, 'User left feature'), [new DictionaryFeatureDescription(target, 'User left feature description')])],
@@ -20,6 +22,7 @@ describe('Dictionary', () => {
 
       const right = new Dictionary(
         new DictionaryName(target, 'User'),
+        new DictionaryGroup('Organization'),
         [new DictionaryAlias('system user')],
         [new DictionaryDescription(target, 'User right description')],
         [
@@ -32,6 +35,7 @@ describe('Dictionary', () => {
 
       expect(actual).toEqual(new Dictionary(
         new DictionaryName(target, 'User'),
+        new DictionaryGroup('Organization'),
         [new DictionaryAlias('user'), new DictionaryAlias('system user')],
         [new DictionaryDescription(target, 'User left description'), new DictionaryDescription(target, 'User right description')],
         [

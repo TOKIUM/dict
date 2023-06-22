@@ -1,6 +1,7 @@
 import { Dictionary } from '../../core/dictionary/Dictionary';
 import { DictionaryAlias } from '../../core/dictionary/DictionaryAlias';
 import { DictionaryDescription } from '../../core/dictionary/DictionaryDescription';
+import { DictionaryGroup } from '../../core/dictionary/DictionaryGroup';
 import { DictionaryName } from '../../core/dictionary/DictionaryName';
 import { DictionaryTarget } from '../../core/dictionary/DictionaryTarget';
 import { ParagraphBlockGenerator } from './ParagraphBlockGenerator';
@@ -8,7 +9,7 @@ import { ParagraphBlockGenerator } from './ParagraphBlockGenerator';
 describe('ParagraphBlockGenerator', () => {
   it('should generate a paragraph block', () => {
     const dictionaryTarget = new DictionaryTarget('User', 'class', 5, 'app/models/user.rb');
-    const dictionary = new Dictionary(new DictionaryName(dictionaryTarget, 'ユーザー'), [new DictionaryAlias('従業員')], [new DictionaryDescription(dictionaryTarget, 'ユーザーです')], [])
+    const dictionary = new Dictionary(new DictionaryName(dictionaryTarget, 'ユーザー'), new DictionaryGroup('組織'), [new DictionaryAlias('従業員')], [new DictionaryDescription(dictionaryTarget, 'ユーザーです')], [])
     const actual = ParagraphBlockGenerator.fromDictionary(dictionary);
 
     expect(actual).toEqual({

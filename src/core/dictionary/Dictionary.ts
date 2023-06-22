@@ -4,10 +4,12 @@ import { DictionaryName } from './DictionaryName';
 import { DictionaryFeature } from './DictionaryFeature';
 import { DictionaryTarget } from './DictionaryTarget';
 import { DictionaryAlias } from './DictionaryAlias';
+import { DictionaryGroup } from './DictionaryGroup';
 
 export class Dictionary {
   constructor(
     public name: DictionaryName,
+    public group: DictionaryGroup | undefined,
     public alias: DictionaryAlias[],
     public descriptions: DictionaryDescription[],
     public features: DictionaryFeature[],
@@ -17,6 +19,7 @@ export class Dictionary {
     const { targetName, targetType, targetLine, targetFilePath } = comment;
     const dictionaryTarget = new DictionaryTarget(targetName, targetType, targetLine, targetFilePath);
     const dictionaryName = DictionaryName.fromLines(dictionaryTarget, comment.lines) ?? parent?.name;
+    const dictionaryGroup = DictionaryGroup.fromLines(comment.lines);
     const dictionaryAlias = DictionaryAlias.fromLines(comment.lines);
     const dictionaryDescription = DictionaryDescription.fromLines(dictionaryTarget, comment.lines);
     const parentFeature = (parent?.features.length > 0 && dictionaryName.value === parent?.name.value) ? parent?.features[parent.features.length - 1] : undefined;
@@ -24,7 +27,7 @@ export class Dictionary {
 
     if (!dictionaryName) { return undefined; }
 
-    return new Dictionary(dictionaryName, dictionaryAlias, dictionaryDescription, dictionaryFeature !== undefined ? [dictionaryFeature] : []);
+    return new Dictionary(dictionaryName, dictionaryGroup, dictionaryAlias, dictionaryDescription, dictionaryFeature !== undefined ? [dictionaryFeature] : []);
   }
 
   static fromComments(comments: CodeComment[]): Dictionary[] {
@@ -59,6 +62,6 @@ export class Dictionary {
     const mergedDescription = this.descriptions.concat(right.descriptions);
     const mergedFeatures = DictionaryFeature.mergeAll(this.features.concat(right.features));
 
-    return new Dictionary(this.name, mergedAlias, mergedDescription, mergedFeatures);
+    return new Dictionary(this.name, this.group, mergedAlias, mergedDescription, mergedFeatures);
   }
 }

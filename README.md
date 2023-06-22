@@ -5,6 +5,7 @@
 # 入力例
 
 # @dict-name ユーザー
+# @dict-group 組織
 # @dict-alias 従業員
 # @dict-desc 会社の従業員です。
 class User
@@ -31,6 +32,8 @@ yaml形式で出力すると、下記のようになります。
 現在、下記の形式のコメントから辞書を作成することができます。
 - `@dict-name`
   - 辞書の名前を指定します。
+- `@dict-group`
+  - 辞書のグループを指定します。
 - `@dict-alias`
   - 辞書の別名を指定します。
 - `@dict-desc`

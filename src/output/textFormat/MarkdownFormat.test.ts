@@ -16,7 +16,7 @@ describe('MarkdownFormat', () => {
       const featureName = new DictionaryFeatureName(target, 'create');
       const featureDesc = new DictionaryFeatureDescription(target, 'Create a user.');
       const feature = new DictionaryFeature(featureName, [featureDesc]);
-      const dictionary = new Dictionary(name, [], desc, [feature]);
+      const dictionary = new Dictionary(name, undefined, [], desc, [feature]);
       const expected = '# User\nThis is a user dictionary.';
       const actual = new MarkdownFormat().format(dictionary);
       expect(actual).toEqual(expected);
