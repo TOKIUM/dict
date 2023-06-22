@@ -1,5 +1,6 @@
 export * from "./Dictionary";
 export * from "./DictionaryName";
+export * from "./DictionaryGroup";
 export * from "./DictionaryAlias";
 export * from "./DictionaryDescription";
 export * from "./DictionaryFeature";
