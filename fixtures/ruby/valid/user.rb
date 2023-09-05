@@ -6,4 +6,9 @@ class User
   def ping
     puts 'pong'
   end
+
+  # @dict-ignore
+  def ignored_ping
+    puts 'pong'
+  end
 end
