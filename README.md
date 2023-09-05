@@ -59,6 +59,8 @@ $ dict generate --format <markdown or yaml or notion> --input <path/to/dict/dir>
 checkコマンドで辞書が書かれているかを確認できます。
 現在、Rubyのクラス・メソッドに対してのみチェックできます。
 `@dict-desc`もしくは`@dict-feature-desc`が書かれていない場合、エラーが発生します。
+また、`@dict-ignore`を記述するとチェック対象から除外されます。
+
 ```bash
 $ dict check --type <class or method> --input <path/to/dict/dir>
 ```
